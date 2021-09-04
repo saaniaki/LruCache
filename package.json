@@ -4,16 +4,21 @@
   "description": "An implementation of Least-Recently Used (LRU) cache in TypeScript.",
   "main": "./dist/index.js",
   "scripts": {
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint '*/**/*.{js,ts,tsx,json}' --quiet --fix",
+    "test": "jest",
+    "coverage": "jest --coverage",
     "build:dev": "tsc",
     "build:watch": "tsc -w",
+    "build:prd": "npm run lint && npm t && tsc",
     "start": "node ./dist/index.js"
   },
   "author": "Ali Niaki",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^27.0.1",
     "@types/node": "^16.7.10",
+    "jest": "^27.1.0",
+    "ts-jest": "^27.0.5",
     "typescript": "^4.4.2"
   },
   "dependencies": {
