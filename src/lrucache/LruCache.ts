@@ -311,8 +311,8 @@ export class LruCache<K, V> implements ILruCache<K, V> {
      * Inserting undefined as the value of an entry is a no-op i.e. an entry
      * with value of undefined can never exist in the Cache.
      *
-     * Time complexity: Ω(1), Θ(1) and O(n) since the inserting, updating
-     * and removing an entry Access Map is the upper bound.
+     * Time complexity: Ω(1), Θ(1) and O(n) since inserting, updating and
+     * removing an entry Access Map is the upper bound.
      *
      * @param key
      * @param value
@@ -377,12 +377,22 @@ export class LruCache<K, V> implements ILruCache<K, V> {
     }
 
     /**
-     * TODO
+     * Retrieves an already cached value where the entry key matches the passed
+     * key. This action is considered a 'use' of the retrieved key. Returns
+     * undefined if there is no entry associated with the passed key.
+     *
+     * Time complexity: Ω(1), Θ(1) and O(n) since accessing/searching Access
+     * Map for an entry is the upper bound.
      *
      * @param key
      */
     public get(key: K): V | undefined {
-        return;
+        // Upper bound = Ω(1), Θ(1) and O(n)
+        const node = this.accessMap.get(key);
+        const value =
+            // Ω(1), Θ(1) and O(1)
+            node !== undefined ? this.moveNodeToHead(node).value : undefined;
+        return value !== undefined ? value : undefined;
     }
 
     /**
