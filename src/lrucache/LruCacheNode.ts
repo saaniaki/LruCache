@@ -11,6 +11,8 @@
  * Generics:
  *  - K is the type of the node key.
  *  - V is the type of the node value.
+ *
+ * @internal
  */
 export class LruCacheNode<K, V> {
     /**
