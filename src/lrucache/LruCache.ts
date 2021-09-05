@@ -396,11 +396,23 @@ export class LruCache<K, V> implements ILruCache<K, V> {
     }
 
     /**
-     * TODO
+     * Deletes an already cached value where the entry key matches the passed
+     * key. Returns the value of the removed entry or undefined if no entry
+     * was removed.
      *
      * @param key
      */
     public delete(key: K): V | undefined {
+        // Upper bound = Ω(1), Θ(1) and O(n)
+        const node = this.accessMap.get(key);
+        if (node !== undefined) {
+            // Ω(1), Θ(1) and O(1)
+            this.unlink(node);
+            // Upper bound = Ω(1), Θ(1) and O(n)
+            this.accessMap.delete(key);
+            return node.value;
+        }
+
         return;
     }
 }
