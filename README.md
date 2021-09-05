@@ -1,4 +1,4 @@
-<p style="text-align: center;">
+<p style="text-align: center;" align="center">
   A production-ready TypeScript implementation of Least-Recently Used (LRU) 
 Cache.
 </p>
@@ -138,7 +138,9 @@ That is, it creates the Doubly Linked List Nodes inside the Map and encapsulates
 the user-entered values into the created Node. The diagram below visualizes this
 combination:
 
-![Combination of a Map and a Doubly Linked List](./assest/diagram.jpg "LRU Cache")
+<p align="center" style="text-align: center;">
+   <img alt="Combination of a Map and a Doubly Linked List" height="800" src="https://github.com/saaniaki/LruCache/blob/main/assest/diagram.jpg" title="LRU Cache"/>
+</p>
 
 Each LRU Cache Node also stores the key of the Map entry to create a link back
 to the Map. This comes handy when trying to discard the Least-Recently Used
@@ -147,15 +149,60 @@ entry; this results in having a delete operation with time complexity of Ω(1), 
 
 The summary of time complexity of the LRU Cache operations is as the following:
 
-| Operation |  Ω   |  Θ   |  O   |
-|-----------|:----:|-----:|-----:|
-|    put    | Ω(1) | Θ(1) | O(n) |
-|    get    | Ω(1) | Θ(1) | O(n) |
-|   delete  | Ω(1) | Θ(1) | O(n) |
-|   reset   | Ω(1) | Θ(1) | O(1) |
-|  capacity | Ω(1) | Θ(1) | O(1) |
-|    size   | Ω(1) | Θ(1) | O(1) |
-|  isEmpty  | Ω(1) | Θ(1) | O(1) |
+<table align="center" style="text-align: center;">
+<thead>
+  <tr>
+    <th>Operation</th>
+    <th>Ω</th>
+    <th>Θ</th>
+    <th>O</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>put</td>
+    <td>Ω(1)</td>
+    <td>Θ(1)</td>
+    <td>O(n)</td>
+  </tr>
+  <tr>
+    <td>get</td>
+    <td>Ω(1)</td>
+    <td>Θ(1)</td>
+    <td>O(n)</td>
+  </tr>
+  <tr>
+    <td>delete</td>
+    <td>Ω(1)</td>
+    <td>Θ(1)</td>
+    <td>O(n)</td>
+  </tr>
+  <tr>
+    <td>reset</td>
+    <td>Ω(1)</td>
+    <td>Θ(1)</td>
+    <td>O(1)</td>
+  </tr>
+  <tr>
+    <td>capacity</td>
+    <td>Ω(1)</td>
+    <td>Θ(1)</td>
+    <td>O(1)</td>
+  </tr>
+  <tr>
+    <td>size</td>
+    <td>Ω(1)</td>
+    <td>Θ(1)</td>
+    <td>O(1)</td>
+  </tr>
+  <tr>
+    <td>isEmpty</td>
+    <td>Ω(1)</td>
+    <td>Θ(1)</td>
+    <td>O(1)</td>
+  </tr>
+</tbody>
+</table>
 
 > NOTE: Although, the put, get and delete of O(n), the worst case scenario is an
 > extreme case and one should take the amortized (average) case Θ(1) in
@@ -164,5 +211,5 @@ The summary of time complexity of the LRU Cache operations is as the following:
 
 ## About the Author
 
-I am Ali Niaki :nerd_face: and I'm in love with secure, extendable performant
-code!
+I am Ali Niaki :nerd_face: and I'm in love with secure, extendable and
+performant code!
