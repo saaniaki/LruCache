@@ -12,7 +12,7 @@ describe("LruCache 'Put' and 'Get' Tests", () => {
      * that's the very last entry inserted.
      */
     test(`Consecutive 'Put' and 'Get'`, () => {
-        const lruCache: ILruCache<string, any> = factory(1);
+        const lruCache: ILruCache<string> = factory(1);
 
         for (let i = 1; i <= 10; i++) {
             const key = `key${i}`;
@@ -30,7 +30,7 @@ describe("LruCache 'Put' and 'Get' Tests", () => {
      */
     test('Consecutive Discard Decision', () => {
         const capacity = 5;
-        const lruCache: ILruCache<string, any> = factory(capacity);
+        const lruCache: ILruCache<string> = factory(capacity);
 
         for (let i = 1; i <= capacity; i++) {
             lruCache.put(`key${i}`, `value${i}`);
@@ -52,7 +52,7 @@ describe("LruCache 'Put' and 'Get' Tests", () => {
      */
     test("'Put' as Update", () => {
         const capacity = 5;
-        const lruCache: ILruCache<string, any> = factory(capacity);
+        const lruCache: ILruCache<string> = factory(capacity);
 
         for (let i = 1; i <= capacity; i++) {
             lruCache.put(`key${i}`, `value${i}`);
@@ -77,7 +77,7 @@ describe("LruCache 'Put' and 'Get' Tests", () => {
      */
     test("'Put' undefined Key", () => {
         const capacity = 5;
-        const lruCache: ILruCache<string | undefined, any> = factory(capacity);
+        const lruCache: ILruCache<string | undefined> = factory(capacity);
 
         expect(() => lruCache.put(undefined, `undefinedValue`)).toThrow(
             /undefined/,
@@ -91,7 +91,7 @@ describe("LruCache 'Put' and 'Get' Tests", () => {
      */
     test("'Put' null Key", () => {
         const capacity = 5;
-        const lruCache: ILruCache<string | null, any> = factory(capacity);
+        const lruCache: ILruCache<string | null> = factory(capacity);
 
         lruCache.put(null, `nullValue`);
         expect(lruCache.get(null)).toBe(`nullValue`);
@@ -108,7 +108,7 @@ describe("LruCache 'Put' and 'Get' Tests", () => {
      */
     test("'Put' undefined Value", () => {
         const capacity = 5;
-        const lruCache: ILruCache<string, any> = factory(capacity);
+        const lruCache: ILruCache<string> = factory(capacity);
 
         lruCache.put(`key0`, undefined);
         expect(lruCache.get(`key0`)).toBeUndefined();
@@ -128,7 +128,7 @@ describe("LruCache 'Put' and 'Get' Tests", () => {
      */
     test("'Put' null Value", () => {
         const capacity = 5;
-        const lruCache: ILruCache<string, any> = factory(capacity);
+        const lruCache: ILruCache<string> = factory(capacity);
 
         lruCache.put(`key0`, null);
         expect(lruCache.get(`key0`)).toBeNull();
@@ -148,7 +148,7 @@ describe("LruCache 'Put' and 'Get' Tests", () => {
      */
     test("Unordered Discard Decision + 'Put' as Update", () => {
         const capacity = 5;
-        const lruCache: ILruCache<string, any> = factory(capacity);
+        const lruCache: ILruCache<string> = factory(capacity);
 
         // Creating [5, 4, 3, 2, 1]
         lruCache.put(`key1`, `value1`);
@@ -187,7 +187,7 @@ describe("LruCache 'Put' and 'Get' Tests", () => {
      */
     test("Unordered Discard Decision + 'Get' as Key Usage", () => {
         const capacity = 5;
-        const lruCache: ILruCache<string, any> = factory(capacity);
+        const lruCache: ILruCache<string> = factory(capacity);
 
         // Creating [3, 2, 1]
         lruCache.put(`key1`, `value1`);
@@ -231,7 +231,7 @@ describe("LruCache 'Put' and 'Get' Tests", () => {
      */
     test("Unordered Discard Decision + 'Put' as Update + 'Get' as Key Usage", () => {
         const capacity = 5;
-        const lruCache: ILruCache<string, any> = factory(capacity);
+        const lruCache: ILruCache<string> = factory(capacity);
 
         // Creating [1, 2]
         lruCache.put(`key1`, `value1`);

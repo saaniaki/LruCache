@@ -11,6 +11,5 @@ import { ILruCache, LruCache } from '../src';
  *
  * @param capacity
  */
-export const factory: (capacity: number) => ILruCache<any, any> = (
-    capacity: number,
-) => new LruCache(capacity);
+export const factory: (capacity: number) => ILruCache = (capacity: number) =>
+    new LruCache(capacity);

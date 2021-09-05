@@ -13,7 +13,7 @@ describe('LruCache Full Scenario', () => {
      */
     test(`Scenario #1`, () => {
         const capacity = 5;
-        const lruCache: ILruCache<string, any> = factory(capacity);
+        const lruCache: ILruCache<string> = factory(capacity);
 
         lruCache.put(`key0`, undefined);
         expect(lruCache.get(`key1`)).toBeUndefined();

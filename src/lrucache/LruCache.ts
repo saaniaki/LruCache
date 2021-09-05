@@ -12,7 +12,7 @@ import { LruCacheNode } from './LruCacheNode';
  * Doubly Linked List which is then used to rank the values based on their
  * usage frequency.
  *
- * Top, beginning or head of the list holds the Most Recently Used entry
+ * The top, beginning or head of the list holds the Most Recently Used entry
  * and the bottom, end or tail of the list holds the Least Recently Used entry.
  *
  * This implementation uses two dummy nodes as the Head and Tail of the
@@ -169,7 +169,8 @@ export class LruCache<K, V> implements ILruCache<K, V> {
     private linkToHead(newNode: LruCacheNode<K, V>): void {
         if (this.head.next === undefined) {
             throw new Error(
-                `Precondition failed: Head node must always have a next node attached to it.`,
+                `Precondition failed: Head node must always have a next node ` +
+                    `attached to it.`,
             );
         }
 
@@ -194,7 +195,8 @@ export class LruCache<K, V> implements ILruCache<K, V> {
     // private linkToTail(newNode: LruCacheNode<K, V>): void {
     //     if (this.tail.previous === undefined) {
     //         throw new Error(
-    //             `Precondition failed: Tail node must always have a previous node attached to it.`,
+    //             `Precondition failed: Tail node must always have a previous ` +
+    //                 `node attached to it.`,
     //         );
     //     }
     //
@@ -218,7 +220,8 @@ export class LruCache<K, V> implements ILruCache<K, V> {
     // private unlinkFromHead(): LruCacheNode<K, V> | undefined {
     //     if (this.head.next === undefined) {
     //         throw new Error(
-    //             `Precondition failed: Head node must always have a next node attached to it.`,
+    //             `Precondition failed: Head node must always have a next node ` +
+    //                 `attached to it.`,
     //         );
     //     }
     //
@@ -239,7 +242,8 @@ export class LruCache<K, V> implements ILruCache<K, V> {
     private unlinkFromTail(): LruCacheNode<K, V> | undefined {
         if (this.tail.previous === undefined) {
             throw new Error(
-                `Precondition failed: Tail node must always have a previous node attached to it.`,
+                `Precondition failed: Tail node must always have a previous ` +
+                    `node attached to it.`,
             );
         }
 
@@ -289,6 +293,19 @@ export class LruCache<K, V> implements ILruCache<K, V> {
     }
 
     /**
+     * A generator to make iterating through the list easier.
+     */
+    private *nodes(): Generator<LruCacheNode<K, V>> {
+        for (
+            let currentNode = this.head.next;
+            currentNode !== this.tail;
+            currentNode = (currentNode as LruCacheNode<K, V>).next
+        ) {
+            yield currentNode as LruCacheNode<K, V>;
+        }
+    }
+
+    /**
      * Returns the number of currently Cached entries.
      */
     public get size(): number {
@@ -334,7 +351,8 @@ export class LruCache<K, V> implements ILruCache<K, V> {
         // consistency.
         if (key === undefined) {
             throw new Error(
-                `Received illegal key of undefined; undefined is not a valid entry key.`,
+                `Received illegal key of undefined; undefined is not a valid ` +
+                    `entry key.`,
             );
         }
 
@@ -382,7 +400,8 @@ export class LruCache<K, V> implements ILruCache<K, V> {
                 this.linkToHead(newNode);
             } else {
                 throw new Error(
-                    `The requested node has not been added; could not discard the least recently used element.`,
+                    `The requested node has not been added; could not discard` +
+                        ` the least recently used element.`,
                 );
             }
         }
@@ -412,6 +431,9 @@ export class LruCache<K, V> implements ILruCache<K, V> {
      * key. Returns the value of the removed entry or undefined if no entry
      * was removed.
      *
+     * Time complexity: Ω(1), Θ(1) and O(n) since accessing/searching Access
+     * Map for an entry is the upper bound.
+     *
      * @param key
      */
     public delete(key: K): V | undefined {
@@ -440,20 +462,7 @@ export class LruCache<K, V> implements ILruCache<K, V> {
     }
 
     /**
-     * A generator to make iterating through the list easier.
-     */
-    public *nodes(): Generator<LruCacheNode<K, V>> {
-        for (
-            let currentNode = this.head.next;
-            currentNode !== this.tail;
-            currentNode = (currentNode as LruCacheNode<K, V>).next
-        ) {
-            yield currentNode as LruCacheNode<K, V>;
-        }
-    }
-
-    /**
-     * Overrides the string representation of LRU Cache Node.
+     * Overrides the string representation of LRU Cache.
      */
     public toString(): string {
         const generator = this.nodes();

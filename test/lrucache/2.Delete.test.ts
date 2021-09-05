@@ -12,7 +12,7 @@ describe("LruCache 'Delete' Tests", () => {
      * iteration.
      */
     test(`Consecutive 'Put' and 'Delete'`, () => {
-        const lruCache: ILruCache<string, any> = factory(1);
+        const lruCache: ILruCache<string> = factory(1);
 
         for (let i = 1; i <= 10; i++) {
             const key = `key${i}`;
@@ -32,7 +32,7 @@ describe("LruCache 'Delete' Tests", () => {
      */
     test("No-op 'Delete' + Ordered Discard Decision", () => {
         const capacity = 5;
-        const lruCache: ILruCache<string, any> = factory(capacity);
+        const lruCache: ILruCache<string> = factory(capacity);
 
         for (let i = 1; i <= capacity; i++) {
             lruCache.put(`key${i}`, `value${i}`);
@@ -52,7 +52,7 @@ describe("LruCache 'Delete' Tests", () => {
      */
     test("Random 'Delete'", () => {
         const capacity = 20;
-        const lruCache: ILruCache<string, any> = factory(capacity);
+        const lruCache: ILruCache<string> = factory(capacity);
 
         const entries = new Array<{ key: string; value: any }>();
         for (let i = 1; i <= capacity; i++) {

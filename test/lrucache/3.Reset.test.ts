@@ -12,7 +12,7 @@ describe("LruCache 'Reset' Tests", () => {
      */
     test(`'Reset' on Empty Cache`, () => {
         const capacity = 10;
-        const lruCache: ILruCache<string, any> = factory(capacity);
+        const lruCache: ILruCache<string> = factory(capacity);
         lruCache.reset();
 
         for (let i = 1; i <= capacity; i++) {
@@ -30,7 +30,7 @@ describe("LruCache 'Reset' Tests", () => {
      */
     test(`'Reset' on a Half-Full Cache`, () => {
         const halfOfCap = 5;
-        const lruCache: ILruCache<string, any> = factory(halfOfCap * 2);
+        const lruCache: ILruCache<string> = factory(halfOfCap * 2);
 
         for (let i = 1; i <= halfOfCap; i++) {
             lruCache.put(`key${i}`, `value${i}`);
@@ -57,7 +57,7 @@ describe("LruCache 'Reset' Tests", () => {
      */
     test(`'Reset' on Full Cache`, () => {
         const capacity = 10;
-        const lruCache: ILruCache<string, any> = factory(capacity);
+        const lruCache: ILruCache<string> = factory(capacity);
 
         for (let i = 1; i <= capacity; i++) {
             lruCache.put(`key${i}`, `value${i}`);

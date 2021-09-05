@@ -7,7 +7,7 @@
  *
  * All implementation of LRU Cache must implement the following interface.
  */
-export interface ILruCache<K, V> {
+export interface ILruCache<K = any, V = any> {
     /**
      * The maximum number of cached key-pair entries.
      */
