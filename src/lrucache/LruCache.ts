@@ -12,6 +12,9 @@ import { LruCacheNode } from './LruCacheNode';
  * Doubly Linked List which is then used to rank the values based on their
  * usage frequency.
  *
+ * Top, beginning or head of the list holds the Most Recently Used entry
+ * and the bottom, end or tail of the list holds the Least Recently Used entry.
+ *
  * This implementation uses two dummy nodes as the Head and Tail of the
  * Doubly Linked List to eliminate the necessity and complexity of dealing
  * with an empty list.
@@ -21,9 +24,6 @@ import { LruCacheNode } from './LruCacheNode';
  * removals of key-value pairs. Also, the amortized time complexity of
  * accessing, searching, inserting, updating and deletion of an entry is
  * Ω(1), Θ(1) and O(n).
- *
- * NOTE: Top, beginning or head of the list holds the Most Recently Used entry
- * and the bottom, end or tail of the list holds the Least Recently Used entry.
  *
  * @see LruCacheNode
  */
@@ -261,7 +261,7 @@ export class LruCache<K, V> implements ILruCache<K, V> {
      * of discarding the LRU entry.
      *
      * Time complexity: Ω(1), Θ(1) and O(n) since the deletion of an entry
-     * of Access Map is the upper bound.
+     * from the Access Map is the upper bound.
      *
      * @private
      */
@@ -302,13 +302,78 @@ export class LruCache<K, V> implements ILruCache<K, V> {
     }
 
     /**
-     * TODO
+     * Caches a new or updates an exiting entry (key => value). This action is
+     * considered a 'use' of the cached/updated key.
+     *
+     * Inserting undefined as the key of an entry is illegal i.e. an entry with
+     * key of undefined would not be Cached and an error would be thrown.
+     *
+     * Inserting undefined as the value of an entry is a no-op i.e. an entry
+     * with value of undefined can never exist in the Cache.
+     *
+     * Time complexity: Ω(1), Θ(1) and O(n) since the inserting, updating
+     * and removing an entry Access Map is the upper bound.
      *
      * @param key
      * @param value
      */
     public put(key: K, value: V): void {
-        return;
+        // undefined key is reserved for the Head and Tail nodes for
+        // consistency.
+        if (key === undefined) {
+            throw new Error(
+                `Received illegal key of undefined; undefined is not a valid entry key.`,
+            );
+        }
+
+        // undefined value is reserved for non-existing values.
+        if (value === undefined) {
+            return;
+        }
+
+        // Upper bound = Ω(1), Θ(1) and O(n)
+        if (this.accessMap.has(key)) {
+            // If the Access Map has an entry associated with the passed
+            // key, the entry needs to get updated, i.e. the encapsulated value
+            // of the node needs to get updated.
+
+            // Casting is safe since the Access Map 'has' check is passed.
+            // Upper bound = Ω(1), Θ(1) and O(n)
+            const node: LruCacheNode<K, V> = this.accessMap.get(
+                key,
+            ) as LruCacheNode<K, V>;
+            node.value = value;
+
+            // Since the entry was updated and write operation is considered
+            // as a 'use', the node should get moved to the top of the list.
+            // Ω(1), Θ(1) and O(1)
+            this.moveNodeToHead(node);
+        } else {
+            // If the Access Map does not include the passed key, a new node
+            // needs to get created and inserted in both the Access Map and
+            // the usage list.
+
+            const newNode = new LruCacheNode(key, value);
+            if (
+                // If there is still room for another item OR
+                this.accessMap.size < this.capacity ||
+                // There is no room left AND (but) the LRU got removed
+                // successfully (so now there should be enough room)
+                // Upper bound = Ω(1), Θ(1) and O(n)
+                this.discardLeastRecentlyUsed()
+            ) {
+                // Then add the newly created node to the Access Map,
+                // Upper bound = Ω(1), Θ(1) and O(n)
+                this.accessMap.set(key, newNode);
+                // And link it to the top of the list.
+                // Ω(1), Θ(1) and O(1)
+                this.linkToHead(newNode);
+            } else {
+                throw new Error(
+                    `The requested node has not been added; could not discard the least recently used element.`,
+                );
+            }
+        }
     }
 
     /**
