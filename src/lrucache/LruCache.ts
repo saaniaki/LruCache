@@ -102,11 +102,15 @@ export class LruCache<K, V> implements ILruCache<K, V> {
      *
      * Time complexity: Ω(1), Θ(1) and O(1).
      *
+     * NOTE: This method is commented since it is not being used in the
+     * current implementation of the LRU Cache. It is kept here only for
+     * demonstration purposes.
+     *
      * @private
      */
-    private get lastNode(): LruCacheNode<K, V> | undefined {
-        return this.isEmpty() ? undefined : this.tail.previous;
-    }
+    // private get lastNode(): LruCacheNode<K, V> | undefined {
+    //     return this.isEmpty() ? undefined : this.tail.previous;
+    // }
 
     /**
      * Links a new node to the passed predecessor and successor nodes.
@@ -180,18 +184,22 @@ export class LruCache<K, V> implements ILruCache<K, V> {
      *
      * Time complexity: Ω(1), Θ(1) and O(1).
      *
+     * NOTE: This method is commented since it is not being used in the
+     * current implementation of the LRU Cache. It is kept here only for
+     * demonstration purposes.
+     *
      * @param newNode
      * @private
      */
-    private linkToTail(newNode: LruCacheNode<K, V>): void {
-        if (this.tail.previous === undefined) {
-            throw new Error(
-                `Precondition failed: Tail node must always have a previous node attached to it.`,
-            );
-        }
-
-        this.link(newNode, this.tail.previous, this.tail);
-    }
+    // private linkToTail(newNode: LruCacheNode<K, V>): void {
+    //     if (this.tail.previous === undefined) {
+    //         throw new Error(
+    //             `Precondition failed: Tail node must always have a previous node attached to it.`,
+    //         );
+    //     }
+    //
+    //     this.link(newNode, this.tail.previous, this.tail);
+    // }
 
     /**
      * Removes the first node from the beginning of the list. Returns undefined
@@ -201,17 +209,21 @@ export class LruCache<K, V> implements ILruCache<K, V> {
      *
      * Time complexity: Ω(1), Θ(1) and O(1).
      *
+     * NOTE: This method is commented since it is not being used in the
+     * current implementation of the LRU Cache. It is kept here only for
+     * demonstration purposes.
+     *
      * @private
      */
-    private unlinkFromHead(): LruCacheNode<K, V> | undefined {
-        if (this.head.next === undefined) {
-            throw new Error(
-                `Precondition failed: Head node must always have a next node attached to it.`,
-            );
-        }
-
-        return this.isEmpty() ? undefined : this.unlink(this.head.next);
-    }
+    // private unlinkFromHead(): LruCacheNode<K, V> | undefined {
+    //     if (this.head.next === undefined) {
+    //         throw new Error(
+    //             `Precondition failed: Head node must always have a next node attached to it.`,
+    //         );
+    //     }
+    //
+    //     return this.isEmpty() ? undefined : this.unlink(this.head.next);
+    // }
 
     /**
      * Removes the last node from the end of the list. Returns undefined
@@ -414,5 +426,43 @@ export class LruCache<K, V> implements ILruCache<K, V> {
         }
 
         return;
+    }
+
+    /**
+     * Makes the Cache iterable and converts the inner nodes to key-value pair
+     * arrays.
+     */
+    public *[Symbol.iterator](): Generator<[K, V]> {
+        const generator = this.nodes();
+        for (let iRes = generator.next(); !iRes.done; iRes = generator.next()) {
+            yield [iRes.value.key as K, iRes.value.value as V];
+        }
+    }
+
+    /**
+     * A generator to make iterating through the list easier.
+     */
+    public *nodes(): Generator<LruCacheNode<K, V>> {
+        for (
+            let currentNode = this.head.next;
+            currentNode !== this.tail;
+            currentNode = (currentNode as LruCacheNode<K, V>).next
+        ) {
+            yield currentNode as LruCacheNode<K, V>;
+        }
+    }
+
+    /**
+     * Overrides the string representation of LRU Cache Node.
+     */
+    public toString(): string {
+        const generator = this.nodes();
+        let result = generator.next().value;
+        result = result ? result : '';
+        for (let iRes = generator.next(); !iRes.done; iRes = generator.next()) {
+            result += `, ${iRes.value}`;
+        }
+
+        return `[${result}]`;
     }
 }

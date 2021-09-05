@@ -34,7 +34,7 @@ export class LruCacheNode<K, V> {
     public constructor(public key?: K, public value?: V) {}
 
     /**
-     * Overriding the string representation of LRU Cache Node.
+     * Overrides the string representation of LRU Cache Node.
      */
     public toString(): string {
         return `{${this.key} => ${this.value}}`;
