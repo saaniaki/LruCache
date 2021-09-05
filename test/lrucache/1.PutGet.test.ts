@@ -177,7 +177,7 @@ describe("LruCache 'Put' and 'Get' Tests", () => {
 
         // Creating [7, 3, 4, 6, 1]
         lruCache.put(`key7`, `updatedValue7`);
-        expect(lruCache.get(`key7`)).toBe(`value7`);
+        expect(lruCache.get(`key7`)).toBe(`updatedValue7`);
         expect(lruCache.get(`key5`)).toBeUndefined();
     });
 
