@@ -1,6 +1,6 @@
 {
   "name": "@saaniaki/lrucache",
-  "version": "1.0.0-rc1",
+  "version": "1.0.0-beta",
   "description": "A production-ready implementation of Least-Recently Used (LRU) cache in TypeScript.",
   "author": "Ali Niaki (saaniaki)",
   "license": "MIT",
@@ -14,6 +14,7 @@
     "url": "git+https://github.com/saaniaki/LruCache.git"
   },
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "lint": "eslint '*/**/*.{js,ts,tsx,json}' --quiet --fix",
     "test": "jest",
@@ -21,6 +22,7 @@
     "build:dev": "tsc",
     "build:watch": "tsc -w",
     "build:prd": "npm run lint && npm t && tsc",
+    "build": "npm run build:prd",
     "start": "node ./dist/index.js"
   },
   "devDependencies": {
@@ -43,5 +45,8 @@
   "homepage": "https://github.com/saaniaki/LruCache#readme",
   "directories": {
     "test": "test"
-  }
+  },
+  "files": [
+    "/dist/**/*"
+  ]
 }
