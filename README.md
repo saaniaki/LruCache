@@ -9,6 +9,14 @@ An LRU Cache is a limited-size key-value pair data structure that arranges
 entries in order of use. When adding new keys causes the capacity to be
 exceeded, the Least-Recently Used entry gets identified and discarded.
 
+## Demo
+
+A NestJS project to demo this library has been deployed to
+[lrucache.tk](https://lrucache.tk/), please give it a visit! :bowtie:
+
+The source code for the demo project is available
+[here](https://github.com/saaniaki/lrucache-demo). :computer:
+
 ## Installation
 
 ```bash
