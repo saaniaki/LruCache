@@ -84,6 +84,23 @@ for (const entry of lruCache) {
 }
 ```
 
+### Assumptions
+
+* Inserting `undefined` as the key of an entry is illegal, i.e. an entry with
+  the `undefined` key should not be cached, and an error should be thrown.
+
+* Inserting `undefined` as the value is a no-op, i.e. an entry with the
+  `undefined` value can never exist in the cache.
+
+* Inserting `null` as the key of an entry is legal, i.e. an entry with the
+  `null` key can be added and cached.
+
+* Inserting `null` as the value is legal, i.e. an entry with the `null`
+  value can be added and cached.
+
+> The above assumptions are merely based on a design decision to treat
+> `undefined` as a non-existing and `null` as a proper key/value.
+
 ## Extending
 
 The `ILruCache` interface exist to make it easy to introduce new implementations

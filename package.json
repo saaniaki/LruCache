@@ -1,6 +1,6 @@
 {
   "name": "@saaniaki/lrucache",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A production-ready implementation of Least-Recently Used (LRU) cache in TypeScript.",
   "author": "Ali Niaki (saaniaki)",
   "license": "MIT",
